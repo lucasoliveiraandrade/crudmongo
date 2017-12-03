@@ -35,8 +35,8 @@ public class UserRepositoryTest {
 	
 	@Test
 	public void test02_shouldCreateANewUser(){		
-		UserCollection user1 = new UserCollection("Lucas", 123);
-		UserCollection user2 = new UserCollection("Djodja", 456);
+//		UserCollection user1 = new UserCollection("Lucas", 123);
+//		UserCollection user2 = new UserCollection("Djodja", 456);
 		
 		assertNull(user1.getId());
 		assertNull(user2.getId());

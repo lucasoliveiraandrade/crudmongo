@@ -1,5 +1,7 @@
 package br.com.crudmongo.collection;
 
+import java.util.Calendar;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,17 +9,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class UserCollection {
 	
 	@Id
-	private String id;
-	
+	private String id;	
 	private String name;
-	
-	private int code;
-
-	public UserCollection(String name, int code) {
-		super();
-		this.name = name;
-		this.code = code;
-	}
+	private Calendar birthday;
+	private Double value;
+	private Integer code;
 
 	public String getName() {
 		return name;
@@ -27,11 +23,11 @@ public class UserCollection {
 		this.name = name;
 	}
 
-	public int getCode() {
+	public Integer getCode() {
 		return code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(Integer code) {
 		this.code = code;
 	}
 
@@ -39,8 +35,24 @@ public class UserCollection {
 		return id;
 	}
 	
+	public Calendar getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Calendar birthday) {
+		this.birthday = birthday;
+	}
+
+	public Double getValue() {
+		return value;
+	}
+
+	public void setValue(Double value) {
+		this.value = value;
+	}
+
 	@Override
 	public String toString() {
-		return "UserCollection [id=" + id + ", name=" + name + ", code=" + code + "]";
+		return "UserCollection [name=" + name + ", birthday=" + birthday + ", value=" + value + ", code=" + code + "]";
 	}
 }

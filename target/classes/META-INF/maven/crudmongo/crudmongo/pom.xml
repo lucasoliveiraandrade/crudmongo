@@ -8,6 +8,7 @@
 	<packaging>jar</packaging>
 
 	<name>crudmongo</name>
+	<description>Demo project to test SpringBoot with MongoDB</description>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -20,6 +21,8 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.8.RELEASE</version>
 	</parent>
+	
+	
 
 	<dependencies>
 		<dependency>
@@ -47,12 +50,18 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.0</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	
 
 	<build>
 		<plugins>	
