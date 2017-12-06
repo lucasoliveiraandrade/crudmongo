@@ -7,9 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="user")
 public class UserCollection {
-	
+
 	@Id
-	private String id;	
+	private String id;
 	private String name;
 	private Calendar birthday;
 	private Double value;
@@ -34,7 +34,7 @@ public class UserCollection {
 	public String getId() {
 		return id;
 	}
-	
+
 	public Calendar getBirthday() {
 		return birthday;
 	}
