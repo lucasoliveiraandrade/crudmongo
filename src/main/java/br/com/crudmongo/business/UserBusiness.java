@@ -1,12 +1,15 @@
 package br.com.crudmongo.business;
 
+import static br.com.crudmongo.util.ValidationExceptionProperties.USER_NOT_FOUND;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.crudmongo.collection.UserCollection;
 import br.com.crudmongo.repository.UserRepository;
 import br.com.crudmongo.util.UserExceptionUtil;
-import static br.com.crudmongo.util.ValidationExceptionProperties.USER_NOT_FOUND;
 import br.com.crudmongo.validation.UserValidator;
 
 @Service
@@ -28,6 +31,16 @@ public class UserBusiness {
 	}
 
 	public void delete(String userId) throws Exception {
+		UserCollection user = find(userId);
+
+		repository.delete(user);
+	}
+
+	public void delete() {
+		repository.deleteAll();
+	}
+
+	public UserCollection find(String userId) throws Exception{
 		validator.isUserIdValid(userId);
 
 		UserCollection user = repository.findOne(userId);
@@ -35,11 +48,23 @@ public class UserBusiness {
 		if(user == null) {
 			throw new Exception(exceptionUtil.getExceptionMessage(USER_NOT_FOUND));
 		}
-
-		repository.delete(user);
+		return user;
 	}
 
-	public void delete() {
-		repository.deleteAll();
+	public List<UserCollection> findAll(){
+		return repository.findAll();
+	}
+
+	public void update(UserCollection user) throws Exception{
+		validator.isUserIdValid(user.getId());
+
+		UserCollection userToUpdate = find(user.getId());
+
+		userToUpdate.setName(user.getName());
+		userToUpdate.setCode(user.getCode());
+		userToUpdate.setBirthday(user.getBirthday());
+		userToUpdate.setValue(user.getValue());
+
+		repository.save(user);
 	}
 }

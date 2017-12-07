@@ -1,5 +1,7 @@
 package br.com.crudmongo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +42,27 @@ public class UserController {
 		business.delete();
 
 		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value="/{userId}", method=RequestMethod.GET)
+	public ResponseEntity<UserCollection> find(@PathVariable String userId) throws Exception{
+		UserCollection user = business.find(userId);
+
+		return new ResponseEntity<UserCollection>(HttpStatus.FOUND).ok(user);
+	}
+
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<UserCollection>> findAll() throws Exception{
+		List<UserCollection> users = business.findAll();
+
+		return new ResponseEntity<List<UserCollection>>(HttpStatus.FOUND).ok(users);
+	}
+
+	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
+	public ResponseEntity<String> update(@RequestBody UserCollection user) throws Exception{
+		business.update(user);
+
+		return new ResponseEntity<>(HttpStatus.OK).ok(user.getId());
 	}
 
 	@ExceptionHandler(Exception.class)
