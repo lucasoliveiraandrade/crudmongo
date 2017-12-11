@@ -5,6 +5,11 @@ import java.util.Calendar;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Model class representing an User.
+ *
+ * @author lucasandrade
+ */
 @Document(collection="user")
 public class UserCollection {
 

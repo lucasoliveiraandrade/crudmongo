@@ -9,6 +9,11 @@ import br.com.crudmongo.util.UserExceptionUtil;
 
 import static br.com.crudmongo.util.ValidationExceptionProperties.*;
 
+/**
+ * The goal of this class is to contain all validations for {@link UserCollection} object.
+ *
+ * @author lucasandrade
+ */
 @Component
 public class UserValidator {
 
@@ -17,6 +22,12 @@ public class UserValidator {
 	@Autowired
 	private UserExceptionUtil exceptionUtil;
 
+	/**
+	 * Checks if a {@link UserCollection} object is valid.
+	 *
+	 * @param user - the User to be validated.
+	 * @throws Exception if the User is not valid.
+	 */
 	public void isValid(UserCollection user) throws Exception {
 		if(user == null) {
 			throw new Exception(exceptionUtil.getExceptionMessage(VALIDATION_USER));
@@ -39,6 +50,12 @@ public class UserValidator {
 		}
 	}
 
+	/**
+	 * Checks if the attribute Id of an {@link UserCollection} object is valid.
+	 *
+	 * @param userId - the Id of the User to be validated.
+	 * @throws Exception if the Id is not valid.
+	 */
 	public void isUserIdValid(String userId) throws Exception{
 		if(userId == null || userId.length() != DEFAULT_ID_LENGTH) {	
 			throw new Exception(exceptionUtil.getExceptionMessage(VALIDATION_USER_ID));

@@ -7,6 +7,11 @@ import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Auxiliary exception class to User flows.
+ *
+ * @author lucasandrade
+ */
 @Component
 public class UserExceptionUtil {
 
@@ -15,6 +20,12 @@ public class UserExceptionUtil {
 	@Autowired
 	private Properties properties;
 
+	/**
+	 * Gets the correspondent error message by it's property key.
+	 *
+	 * @param propertyKey - the key of the exception message to be loaded.
+	 * @return the exception message description.
+	 */
 	public String getExceptionMessage(String propertyKey) {
 
 		try {
