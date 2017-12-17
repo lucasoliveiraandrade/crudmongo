@@ -40,6 +40,10 @@ public class UserCollection {
 		return id;
 	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public Calendar getBirthday() {
 		return birthday;
 	}
