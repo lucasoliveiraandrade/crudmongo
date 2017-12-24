@@ -15,57 +15,35 @@ import javax.servlet.ServletContext;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.crudmongo.SpringbootStart;
 import br.com.crudmongo.collection.UserCollection;
+import br.com.crudmongo.integrationtest.BaseIntegrationTest;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { SpringbootStart.class })
-@WebAppConfiguration(value="src/main/java")
+/**
+ * Integration test for User CRUD flows.
+ *
+ * @author lucasandrade
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class UserControllerIntegrationTest {
-
-	@Autowired
-	private WebApplicationContext webApplicationContext;
-
-	private MockMvc mockMvc;
-	private ObjectMapper jsonMapper;
-
+public class UserControllerIntegrationTest extends BaseIntegrationTest {
 	private static final String REQUEST_BODY_POST = "{ \"name\": \"postman\", \"birthday\":\"2012-04-23T18:25:43.511Z\", \"value\":123.2, \"code\":123 }";
 	private static final String REQUEST_BODY_PUT = "{ \"id\": \"%s\", \"name\": \"postman updated\", \"birthday\":\"2015-07-20T18:25:43.511Z\", \"value\":456.7, \"code\":456 }";
 
-	private static final String CONTENT_TYPE_TEXTPLAIN = "text/plain;charset=UTF-8";
-	private static final String CONTENT_TYPE_JSON = "application/json;charset=UTF-8";
-
-	private static final String URL_APP = "/crudmongo/user";
-	private static final String URL_APP_DELETE_ALL = URL_APP + "/delete";
-	private static final int DEFAULT_ID_LENGTH = 24;
+	private static final String URL_APP_USER = URL_APP + "user";
+	private static final String URL_APP_USER_DELETE_ALL = URL_APP_USER + "/delete";
 
 	private static String createdUserId;
-	private static UserCollection expectedObj;
 
 	@Before
 	public void setup() throws Exception {
-		this.jsonMapper = new ObjectMapper();
-		expectedObj = jsonMapper.readValue(REQUEST_BODY_PUT, UserCollection.class);
-
 	    this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
 
 	    ServletContext servletContext = webApplicationContext.getServletContext();
@@ -77,12 +55,12 @@ public class UserControllerIntegrationTest {
 
 	@Test
 	public void test00_shouldDeleteAllUsers() throws Exception {
-		performRequest(delete(URL_APP_DELETE_ALL), null);
+		performRequest(delete(URL_APP_USER_DELETE_ALL), null);
 	}
 
 	@Test
 	public void test01_shouldCreateANewUser() throws Exception {
-		MockHttpServletRequestBuilder request = post(URL_APP).contentType(MediaType.APPLICATION_JSON).content(REQUEST_BODY_POST);
+		MockHttpServletRequestBuilder request = post(URL_APP_USER).contentType(MediaType.APPLICATION_JSON).content(REQUEST_BODY_POST);
 
 		MockHttpServletResponse response = performRequest(request, CONTENT_TYPE_TEXTPLAIN);
 
@@ -94,7 +72,7 @@ public class UserControllerIntegrationTest {
 
 	@Test
 	public void test02_shouldGetAllUsers() throws Exception {
-		MockHttpServletResponse response = performRequest(get(URL_APP), CONTENT_TYPE_JSON);
+		MockHttpServletResponse response = performRequest(get(URL_APP_USER), CONTENT_TYPE_JSON);
 
 		List<UserCollection> responseObj = jsonMapper.readValue(response.getContentAsString(), new TypeReference<List<UserCollection>>(){});
 
@@ -104,7 +82,7 @@ public class UserControllerIntegrationTest {
 
 	@Test
 	public void test03_shouldGetAndUpdateTheCreatedUser() throws Exception {
-		MockHttpServletRequestBuilder request = get(URL_APP +"/"+ createdUserId);
+		MockHttpServletRequestBuilder request = get(URL_APP_USER +"/"+ createdUserId);
 		MockHttpServletResponse response = performRequest(request, CONTENT_TYPE_JSON);
 
 		UserCollection expectedObj = jsonMapper.readValue(REQUEST_BODY_POST, UserCollection.class);
@@ -122,7 +100,7 @@ public class UserControllerIntegrationTest {
 		responseObj.setCode(expectedObj.getCode());
 		responseObj.setBirthday(expectedObj.getBirthday());
 
-		request = put(URL_APP).content(String.format(REQUEST_BODY_PUT, createdUserId)).contentType(MediaType.APPLICATION_JSON);
+		request = put(URL_APP_USER).content(String.format(REQUEST_BODY_PUT, createdUserId)).contentType(MediaType.APPLICATION_JSON);
 		response = performRequest(request, CONTENT_TYPE_TEXTPLAIN);
 
 		assertEquals(response.getContentAsString(), createdUserId);
@@ -130,10 +108,11 @@ public class UserControllerIntegrationTest {
 
 	@Test
 	public void test04_shouldCheckTheUserModifications() throws Exception {
-		MockHttpServletRequestBuilder request = get(URL_APP +"/"+ createdUserId);
+		MockHttpServletRequestBuilder request = get(URL_APP_USER +"/"+ createdUserId);
 		MockHttpServletResponse response = performRequest(request, CONTENT_TYPE_JSON);
 
 		UserCollection responseObj = jsonMapper.readValue(response.getContentAsString(), UserCollection.class);
+		UserCollection expectedObj = jsonMapper.readValue(REQUEST_BODY_PUT, UserCollection.class);
 
 		assertEquals(responseObj.getName(), expectedObj.getName());
 		assertEquals(responseObj.getCode(), expectedObj.getCode());
@@ -143,19 +122,9 @@ public class UserControllerIntegrationTest {
 
 	@Test
 	public void test05_shouldDeleteTheUserCreated() throws Exception {
-		MockHttpServletRequestBuilder request = delete(URL_APP_DELETE_ALL +"/"+ createdUserId);
+		MockHttpServletRequestBuilder request = delete(URL_APP_USER_DELETE_ALL +"/"+ createdUserId);
 		MockHttpServletResponse response = performRequest(request, CONTENT_TYPE_TEXTPLAIN);
 
 		assertEquals(response.getContentAsString(), createdUserId);
-	}
-
-	private MockHttpServletResponse performRequest(MockHttpServletRequestBuilder request, String contentType) throws Exception {
-		MockHttpServletResponse response = this.mockMvc.perform(request).andReturn().getResponse();
-
-		assertNotNull(response);
-		assertEquals(response.getStatus(), HttpStatus.OK.value());
-		assertEquals(response.getContentType(), contentType);
-
-		return response;
 	}
 }
