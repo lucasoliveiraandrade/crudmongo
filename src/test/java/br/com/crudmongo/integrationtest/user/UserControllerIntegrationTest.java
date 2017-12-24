@@ -49,7 +49,7 @@ public class UserControllerIntegrationTest {
 	private ObjectMapper jsonMapper;
 
 	private static final String REQUEST_BODY_POST = "{ \"name\": \"postman\", \"birthday\":\"2012-04-23T18:25:43.511Z\", \"value\":123.2, \"code\":123 }";
-	private static final String REQUEST_BODY_PUT = "{ \"id\": \"%s\", \"name\": \"postman updated\", \"birthday\":\"2015-04-23T18:25:43.511Z\", \"value\":456.7, \"code\":456 }";
+	private static final String REQUEST_BODY_PUT = "{ \"id\": \"%s\", \"name\": \"postman updated\", \"birthday\":\"2015-07-20T18:25:43.511Z\", \"value\":456.7, \"code\":456 }";
 
 	private static final String CONTENT_TYPE_TEXTPLAIN = "text/plain;charset=UTF-8";
 	private static final String CONTENT_TYPE_JSON = "application/json;charset=UTF-8";
@@ -115,10 +115,12 @@ public class UserControllerIntegrationTest {
 		assertEquals(responseObj.getName(), expectedObj.getName());
 		assertEquals(responseObj.getCode(), expectedObj.getCode());
 		assertEquals(responseObj.getValue(), expectedObj.getValue());
+		assertEquals(responseObj.getBirthday(), expectedObj.getBirthday());
 
 		responseObj.setName(expectedObj.getName());
 		responseObj.setValue(expectedObj.getValue());
 		responseObj.setCode(expectedObj.getCode());
+		responseObj.setBirthday(expectedObj.getBirthday());
 
 		request = put(URL_APP).content(String.format(REQUEST_BODY_PUT, createdUserId)).contentType(MediaType.APPLICATION_JSON);
 		response = performRequest(request, CONTENT_TYPE_TEXTPLAIN);
@@ -136,6 +138,7 @@ public class UserControllerIntegrationTest {
 		assertEquals(responseObj.getName(), expectedObj.getName());
 		assertEquals(responseObj.getCode(), expectedObj.getCode());
 		assertEquals(responseObj.getValue(), expectedObj.getValue());
+		assertEquals(responseObj.getBirthday(), expectedObj.getBirthday());
 	}
 
 	@Test
