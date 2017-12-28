@@ -13,10 +13,8 @@ import org.springframework.context.annotation.Configuration;
 @SpringBootApplication
 @Configuration
 @ComponentScan(basePackages = {"br.com.crudmongo"})
-public class SpringbootStart
-{
-    public static void main( String[] args )
-    {
+public class SpringbootStart {
+    public static void main(String[] args){
     		SpringApplication.run(SpringbootStart.class, args);	
     }
 }
