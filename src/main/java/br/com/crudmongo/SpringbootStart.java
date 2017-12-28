@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @author lucasandrade
  */
 @SpringBootApplication
-@Configuration
+@Configuration 
 @ComponentScan(basePackages = {"br.com.crudmongo"})
 public class SpringbootStart {
     public static void main(String[] args){
