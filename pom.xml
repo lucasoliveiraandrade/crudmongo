@@ -22,7 +22,6 @@
 		<version>1.5.8.RELEASE</version>
 	</parent>	
 	
-
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
