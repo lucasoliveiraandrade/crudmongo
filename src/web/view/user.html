@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="User">
+<html ng-app="UserApp">
   <head>
     <meta charset="utf-8">
     <title>User Management</title>
@@ -8,6 +8,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
     <script src="../module/user.module.js"></script>
     <script src="../controller/user.controller.js"></script>
   </head>
@@ -15,6 +16,32 @@
   <body ng-controller="UserController">
 
     <h1> {{ pageTitle }} </h1>
+
+    <form ng-submit="post()">
+        <div class="margin">
+          <label for="name"> Name: </label><br/>
+          <input type="text" id="userName" ng-model="newUser.name" />
+        </div>
+
+        <div class="margin">
+          <label for="birthday"> Birthday: </label><br/>
+          <input type="text" id="userBirthday" ng-model="newUser.birthday" />
+        </div>
+
+        <div class="margin">
+          <label for="value"> Value: </label><br/>
+          <input type="text" id="userValue" ng-model="newUser.value" />
+        </div>
+
+        <div class="margin">
+          <label for="code"> Code: </label><br/>
+          <input type="text" id="userCode" ng-model="newUser.code" />
+        </div>
+
+        <footer class="margin">
+          <button type="submit"> Enviar </button>
+        </footer>
+    </form>
 
   </body>
 </html>

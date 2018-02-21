@@ -4,13 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.google.gson.Gson;
 
 import br.com.crudmongo.business.UserBusiness;
 import br.com.crudmongo.collection.UserCollection;
@@ -35,11 +39,11 @@ public class UserController {
 	 * @return a {@link ResponseEntity} containing the Id of the created {@link UserCollection}.
 	 * @throws Exception if the User parameter is not valid.
 	 */
-	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
+	@CrossOrigin
+	@RequestMapping(method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> insert(@RequestBody UserCollection user) throws Exception {
 		String userId = business.create(user);
-
-		return new ResponseEntity<String>(HttpStatus.CREATED).ok(userId);
+		return new ResponseEntity<String>(HttpStatus.CREATED).ok(new Gson().toJson(userId));
 	}
 
 	/**
