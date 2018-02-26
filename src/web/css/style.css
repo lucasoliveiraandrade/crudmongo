@@ -1,3 +1,12 @@
 .margin {
   margin: 25px;
 }
+
+.grid {
+  width: 50%;
+}
+
+.gridColumn {
+  width: 24%;
+  display: inline-block;
+}

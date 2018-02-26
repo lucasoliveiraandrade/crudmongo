@@ -91,6 +91,7 @@ public class UserController {
 	 *
 	 * @return a {@link ResponseEntity} containing all Users founded.
 	 */
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<UserCollection>> findAll() {
 		List<UserCollection> users = business.findAll();

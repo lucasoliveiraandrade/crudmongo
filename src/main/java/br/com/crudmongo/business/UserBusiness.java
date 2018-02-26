@@ -2,6 +2,8 @@ package br.com.crudmongo.business;
 
 import static br.com.crudmongo.util.ValidationExceptionProperties.USER_NOT_FOUND;
 
+
+import static java.util.Comparator.comparing;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +87,9 @@ public class UserBusiness {
 	 * @return a list of {@link UserCollection}.
 	 */
 	public List<UserCollection> findAll(){
-		return repository.findAll();
+		List<UserCollection> users = repository.findAll();
+		users.sort(comparing(user -> user.getName()));
+		return users;
 	}
 
 	/**

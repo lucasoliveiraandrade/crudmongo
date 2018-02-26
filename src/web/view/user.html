@@ -41,6 +41,42 @@
         <footer class="margin">
           <button type="submit"> Enviar </button>
         </footer>
+
+        <h2>{{ outputMessage }}</h2>
+    </form>
+
+
+    <div class="grid">
+      <div class="gridColumn">
+        <label> Name </label>
+      </div>
+      <div class="gridColumn">
+        <label> Birthday </label>
+      </div>
+      <div class="gridColumn">
+        <label> Value </label>
+      </div>
+      <div class="gridColumn">
+        <label> Code </label>
+      </div>
+    </div>
+
+
+    <form ng-init="show()">
+        <div ng-repeat="user in users" class="grid">
+          <div class="gridColumn">
+            <label for="name"> {{ user.name }} </label>
+          </div>
+          <div class="gridColumn">
+            <label for="birthday"> {{ user.birthday }}</label>
+          </div>
+          <div class="gridColumn">
+            <label for="value"> {{ user.value }} </label>
+          </div>
+          <div class="gridColumn">
+            <label for="code"> {{ user.code }} </label>
+          </div>
+        </div>
     </form>
 
   </body>
