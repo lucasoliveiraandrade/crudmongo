@@ -12,3 +12,6 @@ Technologies, approaches, frameworks, architecture used:
 - GitHub repository
 - Integration Tests
 - Automatic deploy configured in an AWS EC2 Instance running Jenkins
+- AngularJS
+- Eclipse IDE 
+- Atom IDE 
