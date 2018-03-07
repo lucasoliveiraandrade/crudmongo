@@ -45,8 +45,10 @@
         <h2>{{ outputMessage }}</h2>
     </form>
 
-
     <div class="grid">
+      <div class="gridColumn">
+        <label> Id </label>
+      </div>
       <div class="gridColumn">
         <label> Name </label>
       </div>
@@ -61,9 +63,11 @@
       </div>
     </div>
 
-
     <form ng-init="show()">
         <div ng-repeat="user in users" class="grid">
+          <div class="gridColumn">
+            <label for="name"> {{ user.id }} </label>
+          </div>
           <div class="gridColumn">
             <label for="name"> {{ user.name }} </label>
           </div>
@@ -77,6 +81,12 @@
             <label for="code"> {{ user.code }} </label>
           </div>
         </div>
+    </form>
+
+    <form id="deleteForm" ng-submit="delete(userId)" >
+        <label> User ID: </label><br/>
+        <input type="text" ng-model="userId"/>
+        <button type="submit"> Delete </button>
     </form>
 
   </body>

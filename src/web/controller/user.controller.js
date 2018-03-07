@@ -6,6 +6,7 @@ angular.module("UserApp").controller("UserController", function($scope, $http) {
   $scope.users = {};
 
   var url = "http://localhost:8081/crudmongo/user";
+
   var config = { headers: { 'Content-Type': 'application/json' } }
 
   $scope.post = function(){
@@ -18,10 +19,12 @@ angular.module("UserApp").controller("UserController", function($scope, $http) {
 
       $http.post(url, data, config)
            .then(function () {
-             $scope.outputMessage = "Success";
+             $scope.show();
            }, function(error) {
              $scope.outputMessage = "Error: " + error;
            });
+
+      $scope.cleanScreen();
   }
 
   $scope.show = function(){
@@ -30,5 +33,29 @@ angular.module("UserApp").controller("UserController", function($scope, $http) {
     }, function(){
       $scope.outputMessage = "Error: " + error;
     });
+  }
+
+  $scope.delete = function(userId){
+    var deleteUrl = url + "/delete";
+
+    if(userId != undefined){
+      deleteUrl += "/"+userId;
+    }
+
+    $http.delete(deleteUrl).then(function(result){
+      $scope.show();
+    }, function(){
+      $scope.outputMessage = "Error: " + error;
+    });
+
+    $scope.cleanScreen();
+  }
+
+  $scope.cleanScreen = function(){
+    $scope.newUser.name = null;
+    $scope.newUser.birthday = null;
+    $scope.newUser.value = null;
+    $scope.newUser.code = null;
+    $scope.userId = null;
   }
 });

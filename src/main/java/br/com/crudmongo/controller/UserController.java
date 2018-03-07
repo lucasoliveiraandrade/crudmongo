@@ -53,11 +53,12 @@ public class UserController {
 	 * @return a {@link ResponseEntity} containing the Id of the removed User.
 	 * @throws Exception if the UserId parameter is not valid.
 	 */
+	@CrossOrigin
 	@RequestMapping(value="/delete/{userId}", method=RequestMethod.DELETE)
 	public ResponseEntity<String> delete(@PathVariable String userId) throws Exception{
 		business.delete(userId);
 
-		return new ResponseEntity<String>(HttpStatus.OK).ok(userId);
+		return new ResponseEntity<String>(HttpStatus.OK).ok(new Gson().toJson(userId));
 	}
 
 	/**
@@ -65,6 +66,7 @@ public class UserController {
 	 *
 	 * @return a {@link ResponseEntity} containing Success status.
 	 */
+	@CrossOrigin
 	@RequestMapping(value="/delete", method=RequestMethod.DELETE)
 	public ResponseEntity<String> deleteAll() {
 		business.delete();
