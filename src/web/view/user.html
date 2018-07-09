@@ -39,10 +39,8 @@
         </div>
 
         <footer class="margin">
-          <button type="submit"> Enviar </button>
-        </footer>
-
-        <h2>{{ outputMessage }}</h2>
+          <button type="submit"> Send </button>
+        </footer>      
     </form>
 
     <div class="grid">
@@ -83,10 +81,16 @@
         </div>
     </form>
 
-    <form id="deleteForm" ng-submit="delete(userId)" >
-        <label> User ID: </label><br/>
-        <input type="text" ng-model="userId"/>
+    <form id="deleteForm" ng-submit="delete(userIdDelete)" >
+        <label> Delete - User ID: </label><br/>
+        <input type="text" ng-model="userIdDelete"/>
         <button type="submit"> Delete </button>
+    </form>
+
+    <form id="updateForm" ng-submit="update(userIdUpdate)">
+        <label> Update - User ID: </label><br/>
+        <input type="text" ng-model="userIdUpdate"/>
+        <button type="submit"> Update </button>
     </form>
 
   </body>

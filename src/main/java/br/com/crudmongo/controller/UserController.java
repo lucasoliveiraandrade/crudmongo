@@ -81,6 +81,7 @@ public class UserController {
 	 * @return a {@link ResponseEntity} containing the User founded.
 	 * @throws Exception if the User Id parameter is not valid.
 	 */
+	@CrossOrigin
 	@RequestMapping(value="/{userId}", method=RequestMethod.GET)
 	public ResponseEntity<UserCollection> find(@PathVariable String userId) throws Exception{
 		UserCollection user = business.find(userId);
@@ -108,6 +109,7 @@ public class UserController {
 	 * @return a {@link ResponseEntity} containing the Id of the updated User.
 	 * @throws Exception if the User parameter is not valid.
 	 */
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.PUT, consumes="application/json")
 	public ResponseEntity<String> update(@RequestBody UserCollection user) throws Exception{
 		business.update(user);
